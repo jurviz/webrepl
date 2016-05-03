@@ -1,4 +1,6 @@
 <!doctype html>
+<html>
+<head>
 <title>MicroPython WebREPL</title>
 <!--
   term.js
@@ -32,13 +34,16 @@
 */
 </style>
 <script src="term.js"></script>
-<html>
+</head>
 <body>
-<input type="text" id="url" value="ws://192.168.4.1:8266/" />
-<input type="button" id="button" value="Connect" onclick="button_click()" />
+<form>
+<input type="text" name="webrepl_url" id="url" value="ws://192.168.4.1:8266/" />
+<input type="submit" id="button" value="Connect" onclick="button_click(); return false;" />
+</form>
 <div id="term">
 </div>
 <br clear="both" />
+<i>Terminal widget should be focused (text cursor visible) to accept input. Click on it if not.</i><br/>
 <i>To paste, press Ctrl+A, then Ctrl+V</i>
 </body>
 
@@ -90,6 +95,8 @@ function connect(url) {
             document.title = title;
         });
 
+        term.focus();
+        term.element.focus();
         term.write('\x1b[31mWelcome to MicroPython!\x1b[m\r\n');
 
         ws.onmessage = function(event) {
